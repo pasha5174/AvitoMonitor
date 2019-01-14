@@ -1,0 +1,13 @@
+G:\Workspace\AvitoMonitor\AvitoMonitor\bin\Debug\AvitoMonitor.exe.config
+G:\Workspace\AvitoMonitor\AvitoMonitor\bin\Debug\AvitoMonitor.exe
+G:\Workspace\AvitoMonitor\AvitoMonitor\bin\Debug\AvitoMonitor.pdb
+G:\Workspace\AvitoMonitor\AvitoMonitor\obj\Debug\AvitoMonitor.csprojAssemblyReference.cache
+G:\Workspace\AvitoMonitor\AvitoMonitor\obj\Debug\AvitoMonitor.Form1.resources
+G:\Workspace\AvitoMonitor\AvitoMonitor\obj\Debug\AvitoMonitor.Properties.Resources.resources
+G:\Workspace\AvitoMonitor\AvitoMonitor\obj\Debug\AvitoMonitor.csproj.GenerateResource.cache
+G:\Workspace\AvitoMonitor\AvitoMonitor\obj\Debug\AvitoMonitor.csproj.CoreCompileInputs.cache
+G:\Workspace\AvitoMonitor\AvitoMonitor\obj\Debug\AvitoMonitor.exe
+G:\Workspace\AvitoMonitor\AvitoMonitor\obj\Debug\AvitoMonitor.pdb
+G:\Workspace\AvitoMonitor\AvitoMonitor\bin\Debug\CsQuery.dll
+G:\Workspace\AvitoMonitor\AvitoMonitor\bin\Debug\CsQuery.xml
+G:\Workspace\AvitoMonitor\AvitoMonitor\obj\Debug\AvitoMonitor.csproj.CopyComplete
