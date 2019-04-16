@@ -8,6 +8,8 @@ using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
+//using ProgrammingWeapons;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
@@ -93,6 +95,45 @@ namespace AvitoMonitor{
 
         private void loadbd_Click(object sender, EventArgs e){
             LoadData();
+        }
+
+        /*int index;
+        index = comboBoxType.FindString(comboBoxType.Text);*/
+        //comboBoxType.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        //comboBoxType.AutoCompleteSource = AutoCompleteSource.ListItems;
+            
+        //comboBoxType.Items = func(comboBoxType.Items, comboBoxType.Text);
+
+        private void comboBoxType_KeyPress(object sender, KeyPressEventArgs e){
+            ((ComboBox)sender).DroppedDown = true;
+            if (char.IsControl(e.KeyChar))
+                return;
+            string Str = ((ComboBox)sender).Text.Substring(0, ((ComboBox)sender).SelectionStart) 
+                + e.KeyChar.ToString();
+            int Index = ((ComboBox)sender).FindStringExact(Str);
+            if (Index == -1)
+                Index = ((ComboBox)sender).FindString(Str);
+            ((ComboBox)sender).SelectedIndex = Index;
+            ((ComboBox)sender).SelectionStart = Str.Length;
+            ((ComboBox)sender).SelectionLength = 
+                ((ComboBox)sender).Text.Length - ((ComboBox)sender).SelectionStart;
+            e.Handled = true;
+        }
+
+        private void comboBoxForCity_KeyPress(object sender, KeyPressEventArgs e){
+            ((ComboBox)sender).DroppedDown = true;
+            if (char.IsControl(e.KeyChar))
+                return;
+            string Str = ((ComboBox)sender).Text.Substring(0, ((ComboBox)sender).SelectionStart)
+                + e.KeyChar.ToString();
+            int Index = ((ComboBox)sender).FindStringExact(Str);
+            if (Index == -1)
+                Index = ((ComboBox)sender).FindString(Str);
+            ((ComboBox)sender).SelectedIndex = Index;
+            ((ComboBox)sender).SelectionStart = Str.Length;
+            ((ComboBox)sender).SelectionLength =
+                ((ComboBox)sender).Text.Length - ((ComboBox)sender).SelectionStart;
+            e.Handled = true;
         }
     }
 }

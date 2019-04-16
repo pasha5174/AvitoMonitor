@@ -21,13 +21,13 @@ namespace AvitoMonitor{
                 using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=AvitoMonitor.db; Version=3;")){
                     string commandText = "CREATE TABLE [AvitoMonitor] ( " +
                         //"[id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                        "[name] CHAR(200) NOT NULL, " +
-                        "[city] CHAR(100) NOT NULL, " +
-                        "[time] CHAR(50) NOT NULL, " +
-                        "[type] CHAR(500) NOT NULL, " +
-                        "[image] BLOB, " +
-                        "[image_format] VARCHAR(10), " +
-                        "[image_name] NVARCHAR(128)" +
+                        "[Название] CHAR(200) NOT NULL, " +
+                        "[Город] CHAR(100) NOT NULL, " +
+                        "[Время] CHAR(50) NOT NULL, " +
+                        "[Тип] CHAR(500) NOT NULL, " +
+                        "[Картинка] BLOB, " +
+                        "[Формат картинки] VARCHAR(10), " +
+                        "[Название картинки] NVARCHAR(128)" +
                         ")";
                     SQLiteCommand Command = new SQLiteCommand(commandText, connection);
                     connection.Open(); 
