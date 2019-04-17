@@ -9,7 +9,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
-//using ProgrammingWeapons;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
@@ -51,14 +50,22 @@ namespace AvitoMonitor{
                 CQ items = dom.Select(".item");
 
                 for (int i = 0; i < items.Count(); i++) {
-                    CQ itm = items[i].InnerHTML;
+                    CQ item = items[i].InnerHTML;
 
                     CQ title = dom.Select(".item-description-title-link");
+                    CQ itemphoto = dom.Select(".large-picture-img");
                      
                     richTextBox1.AppendText("***************\n");
-                    richTextBox1.AppendText(title[0]["title"]);
+                    try { 
+                        richTextBox1.AppendText(title[i]["title"].Replace("в Сергиевом Посаде", ""));
+                        richTextBox1.AppendText("\n");
+                        richTextBox1.AppendText(Support.ImageString + itemphoto[i]["src"]);
+                        Support.ImageStringDefault();
+                    } catch (Exception){ 
+                        continue;
+                    }
                     richTextBox1.AppendText(" ");
-                    richTextBox1.AppendText(itm[".price"].Text().Replace("?",""));
+                    richTextBox1.AppendText(item[".price"].Text().Replace("?",""));
 
                     richTextBox1.AppendText("\n");
                 }
@@ -94,15 +101,10 @@ namespace AvitoMonitor{
         }
 
         private void loadbd_Click(object sender, EventArgs e){
+            if (!File.Exists(WAY))
+                Support.CreationOfDataBase(WAY);
             LoadData();
         }
-
-        /*int index;
-        index = comboBoxType.FindString(comboBoxType.Text);*/
-        //comboBoxType.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-        //comboBoxType.AutoCompleteSource = AutoCompleteSource.ListItems;
-            
-        //comboBoxType.Items = func(comboBoxType.Items, comboBoxType.Text);
 
         private void comboBoxType_KeyPress(object sender, KeyPressEventArgs e){
             ((ComboBox)sender).DroppedDown = true;
@@ -134,6 +136,25 @@ namespace AvitoMonitor{
             ((ComboBox)sender).SelectionLength =
                 ((ComboBox)sender).Text.Length - ((ComboBox)sender).SelectionStart;
             e.Handled = true;
+        }
+
+        private void DeleteDB_Click(object sender, EventArgs e){
+            if (File.Exists(WAY)){
+                try { 
+                    dataGridView1.DataSource = null;
+                    DB.Dispose();
+                    connection = null;
+                    Support.DeleteDB(WAY);
+                    MessageBox.Show("База данных успешно удалена", "Удаление прошло успешно",
+                        MessageBoxButtons.OK, MessageBoxIcon.None);
+                } catch (Exception ex) { 
+                    MessageBox.Show(ex.Message, "Ошибка при удалении базы данных", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            } else {
+                MessageBox.Show("Вы не можите удалить базу данных, которой не существует",
+                    "Ошибка при удалении базы данных", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
         }
     }
 }

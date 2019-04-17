@@ -35,6 +35,7 @@
             this.loadbd = new System.Windows.Forms.Button();
             this.comboBoxForCity = new System.Windows.Forms.ComboBox();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
+            this.DeleteDB = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +53,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(12, 49);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(429, 460);
+            this.richTextBox1.Size = new System.Drawing.Size(429, 316);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             // 
@@ -437,7 +438,7 @@
             "Животные",
             "Запчасти и аксессуары",
             "Земельные участки",
-            "Игры,приставки и программы",
+            "Игры, приставки и программы",
             "Квартиры",
             "Книги и журналы",
             "Комнаты",
@@ -480,11 +481,22 @@
             this.comboBoxType.TabIndex = 6;
             this.comboBoxType.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxType_KeyPress);
             // 
+            // DeleteDB
+            // 
+            this.DeleteDB.Location = new System.Drawing.Point(25, 372);
+            this.DeleteDB.Name = "DeleteDB";
+            this.DeleteDB.Size = new System.Drawing.Size(200, 30);
+            this.DeleteDB.TabIndex = 7;
+            this.DeleteDB.Text = "Удалить базу данных";
+            this.DeleteDB.UseVisualStyleBackColor = true;
+            this.DeleteDB.Click += new System.EventHandler(this.DeleteDB_Click);
+            // 
             // AvitoMonitor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1062, 521);
+            this.Controls.Add(this.DeleteDB);
             this.Controls.Add(this.comboBoxType);
             this.Controls.Add(this.comboBoxForCity);
             this.Controls.Add(this.loadbd);
@@ -510,6 +522,7 @@
         private System.Windows.Forms.Button loadbd;
         private System.Windows.Forms.ComboBox comboBoxForCity;
         private System.Windows.Forms.ComboBox comboBoxType;
+        private System.Windows.Forms.Button DeleteDB;
     }
 }
 
