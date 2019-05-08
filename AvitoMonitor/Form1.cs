@@ -16,6 +16,7 @@ using CsQuery;
 
 namespace AvitoMonitor{
     public partial class AvitoMonitor : Form{
+        string MainLink = @"https://www.avito.ru";
         string WAY = @"AvitoMonitor.db";
         string PATHtoIMG = @"Image Maker";
         string conectString = "Data Source=AvitoMonitor.db;Version=3;New=False;Compress=True;";
@@ -56,7 +57,9 @@ namespace AvitoMonitor{
                         SEARCHstring = "https://www.avito.ru";
                         return;
                     }*/
-
+                    
+                    Support.CreationOfDataBase(WAY);
+                    Support.CreationOfDirectory(PATHtoIMG);
                     richTextBox1.AppendText("Downloading... ");
                     try { 
                         htmlCode = client.DownloadString(SEARCHstring);
@@ -77,15 +80,13 @@ namespace AvitoMonitor{
 
                     CQ dom = htmlCode;
                     CQ items = dom.Select(".item");
-
+                    int j = 0;
+                    CQ title = dom.Select(".item-description-title-link");
+                    CQ itemphoto = dom.Select(".large-picture-img");
+                    CQ itemtime = dom.Select(".js-item-date");
                     for (int i = 0; i < items.Count(); i++) {
                         CQ item = items[i].InnerHTML;
-
-                        CQ title = dom.Select(".item-description-title-link");
-                        CQ itemphoto = dom.Select(".large-picture-img");
-                        CQ itemtime = dom.Select(".js-item-date");
-
-                        if(item == null || title == null || itemphoto == null || itemtime == null) {
+                        if (item == null || title == null || itemphoto == null || itemtime == null) {
                             MessageBox.Show("Ошибка поиска, По вашему запросу ничего не найдено",
                             "Ничего не найдено", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             SEARCHstring = "https://www.avito.ru";
@@ -96,21 +97,24 @@ namespace AvitoMonitor{
                         try { 
                             richTextBox1.AppendText(title[i]["title"]);
                             richTextBox1.AppendText("\n");
-                            richTextBox1.AppendText(Support.ImageString + itemphoto[i]["src"]);
+                            richTextBox1.AppendText(Support.ImageString + itemphoto[j]["src"]);
+                            j += item.Select(".large-picture-img").Count();
                             richTextBox1.AppendText("\n");
                             richTextBox1.AppendText(DateTime.Now.ToString());
                             richTextBox1.AppendText(item[".price"].Text().Replace("?", ""));
                             richTextBox1.AppendText("\n");
                             richTextBox1.AppendText(itemtime[i]["data-relative-date"]);
+                            richTextBox1.AppendText("\n");
+                            richTextBox1.AppendText(title[i]["href"]);
 
-                            if(title[i]["title"] != "" && itemphoto[i]["src"] != "" &&
+                            if (title[i]["title"] != "" && itemphoto[i]["src"] != "" &&
                                 item[".price"].Text().Replace("?", "").Replace(" ", "") != "" &&
-                                itemtime[i]["data-relative-date"] != "") {
+                                itemtime[i]["data-relative-date"] != "" && title[i]["href"] != "") {
                                 string path = AppDomain.CurrentDomain.BaseDirectory +
                                         @"\" + PATHtoIMG + @"\" + "img.jpg";
                                 using (WebClient clientimg = new WebClient()){
 
-                                    client.DownloadFile(Support.ImageString + itemphoto[i]["src"], 
+                                    client.DownloadFile(Support.ImageString + itemphoto[j]["src"], 
                                         path);
                                     FileInfo _imgInfo = new FileInfo(path);
                                     long _numBytes = _imgInfo.Length;
@@ -128,8 +132,8 @@ namespace AvitoMonitor{
                                         @"Data Source=" + AppDomain.CurrentDomain.BaseDirectory + @"\" 
                                         + WAY + @"; Version=3;")){
                                         // в запросе есть переменные, они начинаются на @, обратите на это внимание
-                                        string commandText = "INSERT INTO [AvitoMonitor] ([Время], [Название], [Цена], [Город], [Опубликовано], [Тип], [Картинка], [Формат картинки], [Название картинки]) " +
-                                            "VALUES(@time, @name, @price, @city, @addtime, @type, @image, @format, @image_name)";
+                                        string commandText = "INSERT INTO [AvitoMonitor] ([Время], [Название], [Цена], [Город], [Опубликовано], [Тип], [Картинка], [Формат картинки], [Ссылка на Объявление]) " +
+                                            "VALUES(@time, @name, @price, @city, @addtime, @type, @image, @format, @add_link)";
                                         SQLiteCommand Command = new SQLiteCommand(commandText, Connect);
                                         Command.Parameters.AddWithValue("@time", DateTime.Now.ToString());
                                         Command.Parameters.AddWithValue("@name", title[i]["title"]);
@@ -139,16 +143,13 @@ namespace AvitoMonitor{
                                         Command.Parameters.AddWithValue("@type", comboBoxType.Text);
                                         Command.Parameters.AddWithValue("@image", _imageBytes); // присваиваем переменной значение
                                         Command.Parameters.AddWithValue("@format", imgFormat);
-                                        Command.Parameters.AddWithValue("@image_name", imgName);
+                                        Command.Parameters.AddWithValue("@add_link", MainLink + title[i]["href"]);
                                         Connect.Open();
                                         Command.ExecuteNonQuery();
                                         Connect.Close();
 
 
                                     }
-
-
-
                                     _fileStream.Close();
                                     File.Delete(path);
                                 }
@@ -205,13 +206,23 @@ namespace AvitoMonitor{
         }
 
         private void AvitoMonitor_Load(object sender, EventArgs e){
-            
+            this.WindowState = FormWindowState.Maximized;
+            dataGridView1.Width = ClientSize.Width/3*2;
+            dataGridView1.Height = ClientSize.Height/4*3;
         }
 
         private void loadbd_Click(object sender, EventArgs e){
             if (!File.Exists(WAY))
                 Support.CreationOfDataBase(WAY);
             LoadData();
+            dataGridView1.AutoSizeColumnsMode =
+                DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridView1.AutoResizeColumns();
+
+            dataGridView1.AutoSizeRowsMode =
+                DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView1.AutoResizeRows(
+                DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders);
         }
 
         private void comboBoxType_KeyPress(object sender, KeyPressEventArgs e){
@@ -276,15 +287,22 @@ namespace AvitoMonitor{
                 savedialog.ShowHelp = true;
                 if (savedialog.ShowDialog() == DialogResult.OK) { 
                     try{
-                        string filename = Path.GetFullPath(WAY);
-                        File.Copy(filename, Path.GetFullPath(savedialog.FileName), true);
-                    }catch (Exception ex){
-                        MessageBox.Show("Невозможно сохранить базу данных, возможно вы её удалили " 
+                        string sourcePath = AppDomain.CurrentDomain.BaseDirectory;
+                        string targetPath = Path.GetFullPath(savedialog.FileName);
+                        string sourceFile = Path.Combine(sourcePath, WAY);
+                        string destFile = Path.Combine(targetPath, savedialog.FileName);
+                        File.Copy(sourceFile, destFile, true);
+                    } catch (Exception ex){
+                        MessageBox.Show("Невозможно сохранить базу данных, возможно вы её удалили \n" 
                             + ex.Message, "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
+        }
+
+        private void AvitoMonitor_Resize(object sender, EventArgs e){
+            //dataGridView1.Size = new Size(this.Width, this.Height);
         }
     }
 }

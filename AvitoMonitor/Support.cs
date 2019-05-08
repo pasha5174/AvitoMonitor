@@ -31,7 +31,7 @@ namespace AvitoMonitor{
                         "[Тип] CHAR(500) NOT NULL, " +
                         "[Картинка] BLOB, " +
                         "[Формат картинки] VARCHAR(10), " +
-                        "[Название картинки] NVARCHAR(128)" +
+                        "[Ссылка на Объявление] NVARCHAR(128)" +
                         ")";
                     SQLiteCommand Command = new SQLiteCommand(commandText, connection);
                     connection.Open(); 

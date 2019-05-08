@@ -40,13 +40,16 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.копироватьБазуДанныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // search
             // 
-            this.search.Location = new System.Drawing.Point(447, 15);
+            this.search.Location = new System.Drawing.Point(471, 47);
             this.search.Name = "search";
             this.search.Size = new System.Drawing.Size(75, 23);
             this.search.TabIndex = 0;
@@ -72,14 +75,14 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(447, 49);
+            this.dataGridView1.Location = new System.Drawing.Point(450, 90);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(603, 460);
+            this.dataGridView1.Size = new System.Drawing.Size(600, 485);
             this.dataGridView1.TabIndex = 3;
             // 
             // loadbd
             // 
-            this.loadbd.Location = new System.Drawing.Point(528, 15);
+            this.loadbd.Location = new System.Drawing.Point(552, 47);
             this.loadbd.Name = "loadbd";
             this.loadbd.Size = new System.Drawing.Size(143, 23);
             this.loadbd.TabIndex = 4;
@@ -414,7 +417,7 @@
             "Якутск",
             "Ялта",
             "Ярославль"});
-            this.comboBoxForCity.Location = new System.Drawing.Point(688, 16);
+            this.comboBoxForCity.Location = new System.Drawing.Point(701, 47);
             this.comboBoxForCity.Name = "comboBoxForCity";
             this.comboBoxForCity.Size = new System.Drawing.Size(121, 21);
             this.comboBoxForCity.TabIndex = 5;
@@ -481,7 +484,7 @@
             "Фототехника",
             "Хобби и отдых",
             "Часы и украшения"});
-            this.comboBoxType.Location = new System.Drawing.Point(825, 15);
+            this.comboBoxType.Location = new System.Drawing.Point(828, 47);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(121, 21);
             this.comboBoxType.TabIndex = 6;
@@ -522,11 +525,41 @@
             this.копироватьБазуДанныхToolStripMenuItem.Text = "Копировать базу данных";
             this.копироватьБазуДанныхToolStripMenuItem.Click += new System.EventHandler(this.копироватьБазуДанныхToolStripMenuItem_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(701, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Выбирите город";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(828, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(114, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Выбирите категорию";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 40);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(119, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Введите текст поиска";
+            // 
             // AvitoMonitor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1062, 521);
+            this.ClientSize = new System.Drawing.Size(1062, 590);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.DeleteDB);
             this.Controls.Add(this.comboBoxType);
             this.Controls.Add(this.comboBoxForCity);
@@ -541,6 +574,7 @@
             this.Name = "AvitoMonitor";
             this.Text = "AvitoMonitor";
             this.Load += new System.EventHandler(this.AvitoMonitor_Load);
+            this.Resize += new System.EventHandler(this.AvitoMonitor_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -562,6 +596,9 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem копироватьБазуДанныхToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 
