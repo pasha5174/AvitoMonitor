@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AvitoMonitor));
             this.search = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.searchtextBox = new System.Windows.Forms.TextBox();
@@ -36,7 +37,11 @@
             this.comboBoxForCity = new System.Windows.Forms.ComboBox();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
             this.DeleteDB = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.копироватьБазуДанныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // search
@@ -51,7 +56,7 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(12, 49);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 93);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(429, 316);
             this.richTextBox1.TabIndex = 1;
@@ -59,7 +64,7 @@
             // 
             // searchtextBox
             // 
-            this.searchtextBox.Location = new System.Drawing.Point(12, 15);
+            this.searchtextBox.Location = new System.Drawing.Point(12, 59);
             this.searchtextBox.Name = "searchtextBox";
             this.searchtextBox.Size = new System.Drawing.Size(429, 20);
             this.searchtextBox.TabIndex = 2;
@@ -318,6 +323,7 @@
             "Реутов",
             "Ржев",
             "Рославль",
+            "Россия",
             "Россошь",
             "Ростов-на-Дону",
             "Рубцовск",
@@ -483,13 +489,38 @@
             // 
             // DeleteDB
             // 
-            this.DeleteDB.Location = new System.Drawing.Point(25, 372);
+            this.DeleteDB.Location = new System.Drawing.Point(25, 416);
             this.DeleteDB.Name = "DeleteDB";
             this.DeleteDB.Size = new System.Drawing.Size(200, 30);
             this.DeleteDB.TabIndex = 7;
             this.DeleteDB.Text = "Удалить базу данных";
             this.DeleteDB.UseVisualStyleBackColor = true;
             this.DeleteDB.Click += new System.EventHandler(this.DeleteDB_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.файлToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1062, 24);
+            this.menuStrip1.TabIndex = 8;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // файлToolStripMenuItem
+            // 
+            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.копироватьБазуДанныхToolStripMenuItem});
+            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.файлToolStripMenuItem.Text = "Файл";
+            // 
+            // копироватьБазуДанныхToolStripMenuItem
+            // 
+            this.копироватьБазуДанныхToolStripMenuItem.Name = "копироватьБазуДанныхToolStripMenuItem";
+            this.копироватьБазуДанныхToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.копироватьБазуДанныхToolStripMenuItem.Text = "Копировать базу данных";
+            this.копироватьБазуДанныхToolStripMenuItem.Click += new System.EventHandler(this.копироватьБазуДанныхToolStripMenuItem_Click);
             // 
             // AvitoMonitor
             // 
@@ -504,10 +535,15 @@
             this.Controls.Add(this.searchtextBox);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.search);
+            this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "AvitoMonitor";
             this.Text = "AvitoMonitor";
             this.Load += new System.EventHandler(this.AvitoMonitor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -523,6 +559,9 @@
         private System.Windows.Forms.ComboBox comboBoxForCity;
         private System.Windows.Forms.ComboBox comboBoxType;
         private System.Windows.Forms.Button DeleteDB;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem копироватьБазуДанныхToolStripMenuItem;
     }
 }
 
