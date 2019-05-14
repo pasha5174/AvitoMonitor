@@ -67,6 +67,8 @@ namespace AvitoMonitor{
                         Support.htmlCode = client.DownloadString(Support.SEARCHstring);
                     } catch {
                         richTextBox1.AppendText(Support.SEARCHstring);
+                        MessageBox.Show("Ошибка поиска, страницы не существует",
+                        "Введите другие данные", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return;
                     }
                 
@@ -136,7 +138,6 @@ namespace AvitoMonitor{
                                     using (SQLiteConnection Connect = new SQLiteConnection(
                                         @"Data Source=" + AppDomain.CurrentDomain.BaseDirectory + @"\" 
                                         + WAY + @"; Version=3;")){
-                                        // в запросе есть переменные, они начинаются на @, обратите на это внимание
                                         string commandText = "INSERT INTO [AvitoMonitor] ([Время], [Название], [Цена], [Город], [Опубликовано], [Тип], [Картинка], [Формат картинки], [Ссылка на Объявление]) " +
                                             "VALUES(@time, @name, @price, @city, @addtime, @type, @image, @format, @add_link)";
                                         SQLiteCommand Command = new SQLiteCommand(commandText, Connect);
@@ -146,7 +147,7 @@ namespace AvitoMonitor{
                                         Command.Parameters.AddWithValue("@city", comboBoxForCity.Text);
                                         Command.Parameters.AddWithValue("@addtime", itemtime[i]["data-relative-date"]);
                                         Command.Parameters.AddWithValue("@type", comboBoxType.Text);
-                                        Command.Parameters.AddWithValue("@image", _imageBytes); // присваиваем переменной значение
+                                        Command.Parameters.AddWithValue("@image", _imageBytes); 
                                         Command.Parameters.AddWithValue("@format", imgFormat);
                                         Command.Parameters.AddWithValue("@add_link", Support.MainLink + title[i]["href"]);
                                         Connect.Open();
@@ -155,14 +156,10 @@ namespace AvitoMonitor{
                                     }
                                     using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=" + 
                                         AppDomain.CurrentDomain.BaseDirectory + @"\" + WAY_FOR_NEW_ADDS + @"; Version=3;")) {
-                                        string CommandText = "SELECT count(Цена) " +
-                                            "FROM AvitoMonitorNew WHERE name='" + title[i]["title"] + @"'" +
-                                            @"AND Цена='" + item[".price"].Text().Replace("?", "P") + @"'" +
-                                            @"AND Опубликовано='" + itemtime[i]["data-relative-date"] + @"'" +
-                                            @"AND Картинка='" + _imageBytes + @"'"+
-                                            @"AND Ссылка на Объявление='" + Support.MainLink + title[i]["href"] + @"'"; // Если этот запрос не выполняется
+                                        string CommandText = "SELECT count(*) " +
+                                            "FROM AvitoMonitorNew WHERE Ссылка на Объявление=" + Support.MainLink + title[i]["href"] + @""; // Если этот запрос не выполняется
                                         SQLiteCommand Command = new SQLiteCommand(CommandText, connection);
-                                        int countRows = (int)Command.ExecuteScalar();
+                                        int countRows = Convert.ToInt32(Command.ExecuteScalar());
 
                                         if (countRows == 0){
                                             CommandText = "INSERT INTO [AvitoMonitorNew] ([Время], [Название], [Цена], [Город], [Опубликовано], [Тип], [Картинка], [Формат картинки], [Ссылка на Объявление]) " +
@@ -193,7 +190,7 @@ namespace AvitoMonitor{
 
                             Support.ImageStringDefault();
                         } catch (Exception ex){ 
-                            MessageBox.Show(ex.Message);
+                            //MessageBox.Show(ex.Message);
                             continue;
                         }
                         richTextBox1.AppendText("\n");
