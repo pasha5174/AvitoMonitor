@@ -40,9 +40,11 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.копироватьБазуДанныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.loadnewdb = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -82,7 +84,7 @@
             // 
             // loadbd
             // 
-            this.loadbd.Location = new System.Drawing.Point(552, 47);
+            this.loadbd.Location = new System.Drawing.Point(232, 428);
             this.loadbd.Name = "loadbd";
             this.loadbd.Size = new System.Drawing.Size(143, 23);
             this.loadbd.TabIndex = 4;
@@ -513,7 +515,8 @@
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.копироватьБазуДанныхToolStripMenuItem});
+            this.копироватьБазуДанныхToolStripMenuItem,
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
@@ -521,9 +524,16 @@
             // копироватьБазуДанныхToolStripMenuItem
             // 
             this.копироватьБазуДанныхToolStripMenuItem.Name = "копироватьБазуДанныхToolStripMenuItem";
-            this.копироватьБазуДанныхToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.копироватьБазуДанныхToolStripMenuItem.Size = new System.Drawing.Size(338, 22);
             this.копироватьБазуДанныхToolStripMenuItem.Text = "Копировать базу данных";
             this.копироватьБазуДанныхToolStripMenuItem.Click += new System.EventHandler(this.копироватьБазуДанныхToolStripMenuItem_Click);
+            // 
+            // копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem
+            // 
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Name = "копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem";
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Size = new System.Drawing.Size(338, 22);
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Text = "Копировать базу данных для новых объявлений";
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Click += new System.EventHandler(this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -552,11 +562,22 @@
             this.label3.TabIndex = 11;
             this.label3.Text = "Введите текст поиска";
             // 
+            // loadnewdb
+            // 
+            this.loadnewdb.Location = new System.Drawing.Point(232, 457);
+            this.loadnewdb.Name = "loadnewdb";
+            this.loadnewdb.Size = new System.Drawing.Size(176, 29);
+            this.loadnewdb.TabIndex = 12;
+            this.loadnewdb.Text = "Посмотреть новые обьявления";
+            this.loadnewdb.UseVisualStyleBackColor = true;
+            this.loadnewdb.Click += new System.EventHandler(this.loadnewdb_Click_1);
+            // 
             // AvitoMonitor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1062, 590);
+            this.Controls.Add(this.loadnewdb);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -599,6 +620,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button loadnewdb;
+        private System.Windows.Forms.ToolStripMenuItem копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem;
     }
 }
 
