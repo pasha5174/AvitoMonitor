@@ -16,13 +16,10 @@ using CsQuery;
 
 namespace AvitoMonitor{
     public partial class AvitoMonitor : Form{
-        string WAY = @"AvitoMonitor.db";
-        string WAY_FOR_NEW_ADDS = @"AvitoMonitorNew.db";
-        string WAY_FOR_SUPPORT_DB = @"AvitoMonitorSupport.db";
         public AvitoMonitor(){
             InitializeComponent();
-            Support.CreationOfDataBase(WAY);
-            Support.CreationOfDataBaseForNewAdds(WAY_FOR_NEW_ADDS);
+            Support.CreationOfDataBase(Support.WAY);
+            Support.CreationOfDataBaseForNewAdds(Support.WAY_FOR_NEW_ADDS);
             Support.CreationOfDirectory(Support.PATHtoIMG);
         }
 
@@ -50,32 +47,30 @@ namespace AvitoMonitor{
                         Support.SEARCHstring += "?s_trg=11&q=" + searchtextBox.Text;
                     } else if (searchtextBox.Text.Replace(" ", "") == "") {
                         Support.SEARCHstring += "?s_trg=11";
-                    } /*else {
-                        MessageBox.Show("Ошибка поиска, текст поиска отсутствует",
-                        "Вы должны ввести текст поиска", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        SEARCHstring = "https://www.avito.ru";
-                        return;
-                    }*/
+                    }
                     
                     //создание БД и деректории для картинок при их отсутствии
-                    Support.CreationOfDataBase(WAY);
-                    Support.CreationOfDataBaseForNewAdds(WAY_FOR_NEW_ADDS);
+                    Support.CreationOfDataBase(Support.WAY);
+                    Support.CreationOfDataBaseForNewAdds(Support.WAY_FOR_NEW_ADDS);
                     Support.CreationOfDirectory(Support.PATHtoIMG);
-                    richTextBox1.AppendText("Downloading... ");
+
+                    richTextBox1.Clear();
+                    richTextBox1.AppendText("Скачивание... \n");
+                    richTextBox1.AppendText("Никуда не нажимайте до окончания процесса\n");
                     //Проверка на существование страницы
                     try {
                         Support.htmlCode = client.DownloadString(Support.SEARCHstring);
                     } catch {
                         richTextBox1.AppendText(Support.SEARCHstring);
-                        MessageBox.Show("Ошибка поиска, страницы не существует",
-                        "Введите другие данные", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("Ошибка поиска, страницы не существует или нет подключения к интернету",
+                        "Проверьте правильность ввода и подключение к интернету", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        richTextBox1.AppendText("При скачивании произошла ошибка попробуйте еще раз\n");
                         return;
                     }
                 
-                    richTextBox1.AppendText("ok.\n");
-
-                    string sourceFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, WAY_FOR_NEW_ADDS);
-                    string destFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, WAY_FOR_SUPPORT_DB);
+                    //Создание вспомогательной Базы данных 
+                    string sourceFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY_FOR_NEW_ADDS);
+                    string destFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY_FOR_SUPPORT_DB);
                     File.Copy(sourceFile, destFile, true);
 
                     Encoding utf8 = Encoding.GetEncoding("UTF-8");
@@ -100,21 +95,7 @@ namespace AvitoMonitor{
                             Support.SEARCHstring = "https://www.avito.ru";
                             return;
                         }
-
-                        richTextBox1.AppendText("***************\n");
                         try { 
-                            richTextBox1.AppendText(title[i]["title"]);
-                            richTextBox1.AppendText("\n");
-                            richTextBox1.AppendText(Support.ImageString + itemphoto[j]["src"]);
-                            j += item.Select(".large-picture-img").Count();
-                            richTextBox1.AppendText("\n");
-                            richTextBox1.AppendText(DateTime.Now.ToString());
-                            richTextBox1.AppendText(item[".price"].Text().Replace("?", ""));
-                            richTextBox1.AppendText("\n");
-                            richTextBox1.AppendText(itemtime[i]["data-relative-date"]);
-                            richTextBox1.AppendText("\n");
-                            richTextBox1.AppendText(title[i]["href"]);
-
                             if (title[i]["title"] != "" && itemphoto[i]["src"] != "" &&
                                 item[".price"].Text().Replace("?", "").Replace(" ", "") != "" &&
                                 itemtime[i]["data-relative-date"] != "" && title[i]["href"] != "") {
@@ -133,35 +114,49 @@ namespace AvitoMonitor{
                                     string imgFormat = Path.GetExtension(path).Replace(".", "").ToLower(); // запишем в переменную расширение изображения в нижнем регистре, не забыв удалить точку перед расширением, получим «jpg»
                                     string imgName = Path.GetFileName(path).Replace(Path.GetExtension(path), ""); // запишем в переменную имя файла, не забыв удалить расширение с точкой, получим «img»
 
-                                    // записываем информацию в базу данных
-
-                                    using (SQLiteConnection Connect = new SQLiteConnection(
-                                        @"Data Source=" + AppDomain.CurrentDomain.BaseDirectory + @"\" 
-                                        + WAY + @"; Version=3;")){
-                                        string commandText = "INSERT INTO [AvitoMonitor] ([Время], [Название], [Цена], [Город], [Опубликовано], [Тип], [Картинка], [Формат картинки], [Ссылка на Объявление]) " +
-                                            "VALUES(@time, @name, @price, @city, @addtime, @type, @image, @format, @add_link)";
-                                        SQLiteCommand Command = new SQLiteCommand(commandText, Connect);
-                                        Command.Parameters.AddWithValue("@time", DateTime.Now.ToString());
-                                        Command.Parameters.AddWithValue("@name", title[i]["title"]);
-                                        Command.Parameters.AddWithValue("@price", item[".price"].Text().Replace("?", "P"));
-                                        Command.Parameters.AddWithValue("@city", comboBoxForCity.Text);
-                                        Command.Parameters.AddWithValue("@addtime", itemtime[i]["data-relative-date"]);
-                                        Command.Parameters.AddWithValue("@type", comboBoxType.Text);
-                                        Command.Parameters.AddWithValue("@image", _imageBytes); 
-                                        Command.Parameters.AddWithValue("@format", imgFormat);
-                                        Command.Parameters.AddWithValue("@add_link", Support.MainLink + title[i]["href"]);
-                                        Connect.Open();
-                                        Command.ExecuteNonQuery();
-                                        Connect.Close();
+                                    // записываем информацию в базы данных
+                                    using (SQLiteConnection connectOP = new SQLiteConnection(
+                                        @"Data Source=" + AppDomain.CurrentDomain.BaseDirectory + @"\"
+                                        + Support.WAY + @"; Version=3;")){
+                                        DataTable dTable = new DataTable();
+                                        string CommandTextOP = "SELECT * " +
+                                            "FROM AvitoMonitor WHERE [Ссылка на Объявление]='" + Support.MainLink + title[i]["href"] + @"'"; // Если этот запрос не выполняется
+                                        SQLiteCommand CommandOP = new SQLiteCommand(CommandTextOP, connectOP);
+                                        SQLiteDataAdapter adapter = new SQLiteDataAdapter(CommandTextOP, connectOP);
+                                        adapter.Fill(dTable);
+                                        if (dTable.Rows.Count == 0) {
+                                            using (SQLiteConnection Connect = new SQLiteConnection(
+                                                    @"Data Source=" + AppDomain.CurrentDomain.BaseDirectory + @"\"
+                                                    + Support.WAY + @"; Version=3;")){
+                                                string commandText = "INSERT INTO [AvitoMonitor] ([Время], [Название], [Цена], [Город], [Опубликовано], [Тип], [Картинка], [Формат картинки], [Ссылка на Объявление]) " +
+                                                    "VALUES(@time, @name, @price, @city, @addtime, @type, @image, @format, @add_link)";
+                                                SQLiteCommand Command = new SQLiteCommand(commandText, Connect);
+                                                Command.Parameters.AddWithValue("@time", DateTime.Now.ToString());
+                                                Command.Parameters.AddWithValue("@name", title[i]["title"]);
+                                                Command.Parameters.AddWithValue("@price", item[".price"].Text().Replace("?", "P"));
+                                                Command.Parameters.AddWithValue("@city", comboBoxForCity.Text);
+                                                Command.Parameters.AddWithValue("@addtime", itemtime[i]["data-relative-date"]);
+                                                Command.Parameters.AddWithValue("@type", comboBoxType.Text);
+                                                Command.Parameters.AddWithValue("@image", _imageBytes);
+                                                Command.Parameters.AddWithValue("@format", imgFormat);
+                                                Command.Parameters.AddWithValue("@add_link", Support.MainLink + title[i]["href"]);
+                                                Connect.Open();
+                                                Command.ExecuteNonQuery();
+                                                Connect.Close();
+                                            }
+                                        }
                                     }
+                                    
                                     using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=" + 
-                                        AppDomain.CurrentDomain.BaseDirectory + @"\" + WAY_FOR_NEW_ADDS + @"; Version=3;")) {
-                                        string CommandText = "SELECT count(*) " +
-                                            "FROM AvitoMonitorNew WHERE Ссылка на Объявление=" + Support.MainLink + title[i]["href"] + @""; // Если этот запрос не выполняется
+                                        AppDomain.CurrentDomain.BaseDirectory + @"\" + Support.WAY_FOR_NEW_ADDS + @"; Version=3;")) {
+                                        DataTable dTable = new DataTable();
+                                        string CommandText = "SELECT * " +
+                                            "FROM AvitoMonitorNew WHERE [Ссылка на Объявление]='" + Support.MainLink + title[i]["href"] + @"'"; // Если этот запрос не выполняется
                                         SQLiteCommand Command = new SQLiteCommand(CommandText, connection);
-                                        int countRows = Convert.ToInt32(Command.ExecuteScalar());
+                                        SQLiteDataAdapter adapter = new SQLiteDataAdapter(CommandText, connection);
+                                        adapter.Fill(dTable);
 
-                                        if (countRows == 0){
+                                        if (dTable.Rows.Count == 0){
                                             CommandText = "INSERT INTO [AvitoMonitorNew] ([Время], [Название], [Цена], [Город], [Опубликовано], [Тип], [Картинка], [Формат картинки], [Ссылка на Объявление]) " +
                                             "VALUES(@time, @name, @price, @city, @addtime, @type, @image, @format, @add_link)";
                                             Command = new SQLiteCommand(CommandText, connection);
@@ -177,6 +172,13 @@ namespace AvitoMonitor{
                                             connection.Open();
                                             Command.ExecuteNonQuery();
                                             connection.Close();
+                                            Support.Marker = true;
+                                        } else { 
+                                            CommandText = "DELETE FROM [AvitoMonitorNew] WHERE [Ссылка на Объявление]='" + Support.MainLink + title[i]["href"] + @"'";
+                                            Command = new SQLiteCommand(CommandText, connection);
+                                            connection.Open();
+                                            Command.ExecuteNonQuery();
+                                            connection.Close();
                                         }
                                     }
                                     _fileStream.Close();
@@ -184,18 +186,40 @@ namespace AvitoMonitor{
                                 }
                                 
                                 
-                            } 
-
-
-
+                            }
                             Support.ImageStringDefault();
                         } catch (Exception ex){ 
                             //MessageBox.Show(ex.Message);
                             continue;
                         }
-                        richTextBox1.AppendText("\n");
+                        j += item.Select(".large-picture-img").Count();
                     }
-                    File.Delete(WAY_FOR_SUPPORT_DB);
+                    richTextBox1.AppendText("Скачивание прошло успешно\n");
+                    if (Support.Marker) {
+                        richTextBox1.AppendText("Программа нашла новые объявления\n");
+                        MessageBox.Show("Найдены новые объявления",
+                        "Есть новые объявления", MessageBoxButtons.OK);
+                        Support.Marker = false;
+                    } else {
+                        richTextBox1.AppendText("Программа не нашла новых объявлений\n");
+                        MessageBox.Show("Новых обьявлений не найдено",
+                               "Нет новых объявлений", MessageBoxButtons.OK);
+                        using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=" +
+                            AppDomain.CurrentDomain.BaseDirectory + @"\" + Support.WAY_FOR_NEW_ADDS + @"; Version=3;")) { 
+                            DataTable dTable = new DataTable();
+                            string CommandText = "SELECT * FROM AvitoMonitorNew";
+                            SQLiteCommand Command = new SQLiteCommand(CommandText, connection);
+                            SQLiteDataAdapter adapter = new SQLiteDataAdapter(CommandText, connection);
+                            adapter.Fill(dTable);
+                            if (dTable.Rows.Count == 0){
+                                string beginFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY_FOR_SUPPORT_DB);
+                                string endFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY_FOR_NEW_ADDS);
+                                File.Copy(beginFile, endFile, true);
+                            }
+                        }
+                    }
+                    File.Delete(Support.WAY_FOR_SUPPORT_DB);
+                    Support.SEARCHstring = "https://www.avito.ru";
                 }
             } catch (Exception) {
                 MessageBox.Show("Нет соеденения с интернетом",
@@ -257,8 +281,8 @@ namespace AvitoMonitor{
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
-            if (!File.Exists(WAY))
-                Support.CreationOfDataBase(WAY);
+            if (!File.Exists(Support.WAY))
+                Support.CreationOfDataBase(Support.WAY);
             LoadData();
 
             dataGridView1.AutoSizeColumnsMode =
@@ -276,8 +300,8 @@ namespace AvitoMonitor{
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
-            if (!File.Exists(WAY_FOR_NEW_ADDS))
-                Support.CreationOfDataBaseForNewAdds(WAY_FOR_NEW_ADDS);
+            if (!File.Exists(Support.WAY_FOR_NEW_ADDS))
+                Support.CreationOfDataBaseForNewAdds(Support.WAY_FOR_NEW_ADDS);
             LoadNewData();
 
             dataGridView1.AutoSizeColumnsMode =
@@ -323,22 +347,22 @@ namespace AvitoMonitor{
         }
 
         private void DeleteDB_Click(object sender, EventArgs e){
-            if (File.Exists(WAY) && File.Exists(WAY_FOR_NEW_ADDS)){
+            if (File.Exists(Support.WAY) && File.Exists(Support.WAY_FOR_NEW_ADDS)){
                 try { 
                     dataGridView1.DataSource = null;
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
-                    Support.DeleteDB(WAY);
-                    Support.DeleteDB(WAY_FOR_NEW_ADDS);
-                    MessageBox.Show("База данных успешно удалена", "Удаление прошло успешно",
+                    Support.DeleteDB(Support.WAY);
+                    Support.DeleteDB(Support.WAY_FOR_NEW_ADDS);
+                    MessageBox.Show("Базы данных успешно удалены", "Удаление прошло успешно",
                         MessageBoxButtons.OK, MessageBoxIcon.None);
                 } catch (Exception ex) { 
-                    MessageBox.Show(ex.Message, "Ошибка при удалении базы данных", 
+                    MessageBox.Show(ex.Message, "Ошибка при удалении баз данных", 
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             } else {
-                MessageBox.Show("Вы не можите удалить базу данных, которой не существует",
-                    "Ошибка при удалении базы данных", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show("Вы не можите удалить базы данных, которых не существует",
+                    "Ошибка при удалении баз данных", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
 
@@ -354,7 +378,7 @@ namespace AvitoMonitor{
                 try{
                     string sourcePath = AppDomain.CurrentDomain.BaseDirectory;
                     string targetPath = Path.GetFullPath(savedialog.FileName);
-                    string sourceFile = Path.Combine(sourcePath, WAY);
+                    string sourceFile = Path.Combine(sourcePath, Support.WAY);
                     string destFile = Path.Combine(targetPath, savedialog.FileName);
                     File.Copy(sourceFile, destFile, true);
                 } catch (Exception ex){
@@ -377,7 +401,7 @@ namespace AvitoMonitor{
                 try{
                     string sourcePath = AppDomain.CurrentDomain.BaseDirectory;
                     string targetPath = Path.GetFullPath(savedialog.FileName);
-                    string sourceFile = Path.Combine(sourcePath, WAY_FOR_NEW_ADDS);
+                    string sourceFile = Path.Combine(sourcePath, Support.WAY_FOR_NEW_ADDS);
                     string destFile = Path.Combine(targetPath, savedialog.FileName);
                     File.Copy(sourceFile, destFile, true);
                 } catch (Exception ex){

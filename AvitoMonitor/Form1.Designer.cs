@@ -84,11 +84,11 @@
             // 
             // loadbd
             // 
-            this.loadbd.Location = new System.Drawing.Point(232, 428);
+            this.loadbd.Location = new System.Drawing.Point(232, 427);
             this.loadbd.Name = "loadbd";
-            this.loadbd.Size = new System.Drawing.Size(143, 23);
+            this.loadbd.Size = new System.Drawing.Size(176, 24);
             this.loadbd.TabIndex = 4;
-            this.loadbd.Text = "Загрузить базу данных";
+            this.loadbd.Text = "Посмотреть все найденые обьявления";
             this.loadbd.UseVisualStyleBackColor = true;
             this.loadbd.Click += new System.EventHandler(this.loadbd_Click);
             // 
@@ -498,7 +498,7 @@
             this.DeleteDB.Name = "DeleteDB";
             this.DeleteDB.Size = new System.Drawing.Size(200, 30);
             this.DeleteDB.TabIndex = 7;
-            this.DeleteDB.Text = "Удалить базу данных";
+            this.DeleteDB.Text = "Удалить базы данных";
             this.DeleteDB.UseVisualStyleBackColor = true;
             this.DeleteDB.Click += new System.EventHandler(this.DeleteDB_Click);
             // 

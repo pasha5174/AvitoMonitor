@@ -15,7 +15,11 @@ using CsQuery;
 
 namespace AvitoMonitor{
     internal static class Support {
+        public static bool Marker = false;
         public static string htmlCode;
+        public static string WAY = @"AvitoMonitor.db";
+        public static string WAY_FOR_NEW_ADDS = @"AvitoMonitorNew.db";
+        public static string WAY_FOR_SUPPORT_DB = @"AvitoMonitorSupport.db";
         public static string PATHtoIMG = @"Image Maker";
         public static string ImageString = "https:";
         public static string MainLink = @"https://www.avito.ru";
