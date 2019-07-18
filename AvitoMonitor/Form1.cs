@@ -55,7 +55,7 @@ namespace AvitoMonitor{
                     Support.CreationOfDirectory(Support.PATHtoIMG);
 
                     richTextBox1.Clear();
-                    richTextBox1.AppendText("Скачивание... \n");
+                    richTextBox1.AppendText("Скачивание...\n");
                     richTextBox1.AppendText("Никуда не нажимайте до окончания процесса\n");
                     //Проверка на существование страницы
                     try {
@@ -103,7 +103,7 @@ namespace AvitoMonitor{
                                         @"\" + Support.PATHtoIMG + @"\" + "img.jpg";
                                 using (WebClient clientimg = new WebClient()){
 
-                                    client.DownloadFile(Support.ImageString + itemphoto[j]["src"], 
+                                    client.DownloadFile(Support.ImageString + itemphoto[j]["src"].Replace("https:", ""), 
                                         path);
                                     FileInfo _imgInfo = new FileInfo(path);
                                     long _numBytes = _imgInfo.Length;
@@ -139,7 +139,7 @@ namespace AvitoMonitor{
                                                 Command.Parameters.AddWithValue("@type", comboBoxType.Text);
                                                 Command.Parameters.AddWithValue("@image", _imageBytes);
                                                 Command.Parameters.AddWithValue("@format", imgFormat);
-                                                Command.Parameters.AddWithValue("@add_link", Support.MainLink + title[i]["href"]);
+                                                Command.Parameters.AddWithValue("@add_link", Support.MainLink + title[i]["href"].Replace(Support.MainLink,""));
                                                 Connect.Open();
                                                 Command.ExecuteNonQuery();
                                                 Connect.Close();
@@ -168,7 +168,7 @@ namespace AvitoMonitor{
                                             Command.Parameters.AddWithValue("@type", comboBoxType.Text);
                                             Command.Parameters.AddWithValue("@image", _imageBytes); 
                                             Command.Parameters.AddWithValue("@format", imgFormat);
-                                            Command.Parameters.AddWithValue("@add_link", Support.MainLink + title[i]["href"]);
+                                            Command.Parameters.AddWithValue("@add_link", Support.MainLink + title[i]["href"].Replace(Support.MainLink, ""));
                                             connection.Open();
                                             Command.ExecuteNonQuery();
                                             connection.Close();
@@ -184,8 +184,6 @@ namespace AvitoMonitor{
                                     _fileStream.Close();
                                     File.Delete(path);
                                 }
-                                
-                                
                             }
                             Support.ImageStringDefault();
                         } catch (Exception ex){ 
@@ -219,7 +217,8 @@ namespace AvitoMonitor{
                         }
                     }
                     File.Delete(Support.WAY_FOR_SUPPORT_DB);
-                    Support.SEARCHstring = "https://www.avito.ru";
+                    //richTextBox1.AppendText(Support.SEARCHstring);
+                    Support.SEARCHstringDefault();
                 }
             } catch (Exception) {
                 MessageBox.Show("Нет соеденения с интернетом",
@@ -414,6 +413,11 @@ namespace AvitoMonitor{
 
         private void AvitoMonitor_Resize(object sender, EventArgs e){
             //dataGridView1.Size = new Size(this.Width, this.Height);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

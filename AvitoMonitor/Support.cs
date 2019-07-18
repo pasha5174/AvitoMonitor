@@ -86,7 +86,10 @@ namespace AvitoMonitor{
             }
         }
         public static void ImageStringDefault() { 
-            ImageString = "https:";    
+            ImageString = "https:";
+        }
+        public static void SEARCHstringDefault() {
+            SEARCHstring = "https://www.avito.ru";
         }
         public static Dictionary<string, string> Cities = new Dictionary<string, string> {
             ["Абакан"] = "abakan",

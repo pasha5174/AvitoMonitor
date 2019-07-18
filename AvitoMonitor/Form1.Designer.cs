@@ -40,20 +40,20 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.копироватьБазуДанныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.loadnewdb = new System.Windows.Forms.Button();
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // search
             // 
-            this.search.Location = new System.Drawing.Point(471, 47);
+            this.search.Location = new System.Drawing.Point(351, 59);
             this.search.Name = "search";
-            this.search.Size = new System.Drawing.Size(75, 23);
+            this.search.Size = new System.Drawing.Size(76, 20);
             this.search.TabIndex = 0;
             this.search.Text = "Поиск";
             this.search.UseVisualStyleBackColor = true;
@@ -61,9 +61,9 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(12, 93);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 136);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(429, 316);
+            this.richTextBox1.Size = new System.Drawing.Size(248, 43);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             // 
@@ -71,7 +71,7 @@
             // 
             this.searchtextBox.Location = new System.Drawing.Point(12, 59);
             this.searchtextBox.Name = "searchtextBox";
-            this.searchtextBox.Size = new System.Drawing.Size(429, 20);
+            this.searchtextBox.Size = new System.Drawing.Size(327, 20);
             this.searchtextBox.TabIndex = 2;
             // 
             // dataGridView1
@@ -84,11 +84,11 @@
             // 
             // loadbd
             // 
-            this.loadbd.Location = new System.Drawing.Point(232, 427);
+            this.loadbd.Location = new System.Drawing.Point(12, 185);
             this.loadbd.Name = "loadbd";
-            this.loadbd.Size = new System.Drawing.Size(176, 24);
+            this.loadbd.Size = new System.Drawing.Size(248, 24);
             this.loadbd.TabIndex = 4;
-            this.loadbd.Text = "Посмотреть все найденые обьявления";
+            this.loadbd.Text = "Посмотреть все найденые объявления";
             this.loadbd.UseVisualStyleBackColor = true;
             this.loadbd.Click += new System.EventHandler(this.loadbd_Click);
             // 
@@ -419,7 +419,7 @@
             "Якутск",
             "Ялта",
             "Ярославль"});
-            this.comboBoxForCity.Location = new System.Drawing.Point(701, 47);
+            this.comboBoxForCity.Location = new System.Drawing.Point(12, 109);
             this.comboBoxForCity.Name = "comboBoxForCity";
             this.comboBoxForCity.Size = new System.Drawing.Size(121, 21);
             this.comboBoxForCity.TabIndex = 5;
@@ -486,7 +486,7 @@
             "Фототехника",
             "Хобби и отдых",
             "Часы и украшения"});
-            this.comboBoxType.Location = new System.Drawing.Point(828, 47);
+            this.comboBoxType.Location = new System.Drawing.Point(139, 109);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(121, 21);
             this.comboBoxType.TabIndex = 6;
@@ -494,9 +494,9 @@
             // 
             // DeleteDB
             // 
-            this.DeleteDB.Location = new System.Drawing.Point(25, 416);
+            this.DeleteDB.Location = new System.Drawing.Point(12, 245);
             this.DeleteDB.Name = "DeleteDB";
-            this.DeleteDB.Size = new System.Drawing.Size(200, 30);
+            this.DeleteDB.Size = new System.Drawing.Size(248, 24);
             this.DeleteDB.TabIndex = 7;
             this.DeleteDB.Text = "Удалить базы данных";
             this.DeleteDB.UseVisualStyleBackColor = true;
@@ -528,30 +528,24 @@
             this.копироватьБазуДанныхToolStripMenuItem.Text = "Копировать базу данных";
             this.копироватьБазуДанныхToolStripMenuItem.Click += new System.EventHandler(this.копироватьБазуДанныхToolStripMenuItem_Click);
             // 
-            // копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem
-            // 
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Name = "копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem";
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Size = new System.Drawing.Size(338, 22);
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Text = "Копировать базу данных для новых объявлений";
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Click += new System.EventHandler(this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(701, 28);
+            this.label1.Location = new System.Drawing.Point(12, 90);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 13);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Выбирите город";
+            this.label1.Text = "Выберите город";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(828, 28);
+            this.label2.Location = new System.Drawing.Point(139, 90);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(114, 13);
             this.label2.TabIndex = 10;
-            this.label2.Text = "Выбирите категорию";
+            this.label2.Text = "Выберите категорию";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -564,13 +558,20 @@
             // 
             // loadnewdb
             // 
-            this.loadnewdb.Location = new System.Drawing.Point(232, 457);
+            this.loadnewdb.Location = new System.Drawing.Point(12, 215);
             this.loadnewdb.Name = "loadnewdb";
-            this.loadnewdb.Size = new System.Drawing.Size(176, 29);
+            this.loadnewdb.Size = new System.Drawing.Size(248, 24);
             this.loadnewdb.TabIndex = 12;
-            this.loadnewdb.Text = "Посмотреть новые обьявления";
+            this.loadnewdb.Text = "Посмотреть новые объявления";
             this.loadnewdb.UseVisualStyleBackColor = true;
             this.loadnewdb.Click += new System.EventHandler(this.loadnewdb_Click_1);
+            // 
+            // копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem
+            // 
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Name = "копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem";
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Size = new System.Drawing.Size(338, 22);
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Text = "Копировать базу данных для новых объявлений";
+            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Click += new System.EventHandler(this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem_Click);
             // 
             // AvitoMonitor
             // 
