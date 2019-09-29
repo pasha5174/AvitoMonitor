@@ -19,7 +19,6 @@ namespace AvitoMonitor{
         public AvitoMonitor(){
             InitializeComponent();
             Support.CreationOfDataBase(Support.WAY);
-            Support.CreationOfDataBaseForNewAdds(Support.WAY_FOR_NEW_ADDS);
             Support.CreationOfDirectory(Support.PATHtoIMG);
         }
 
@@ -51,7 +50,6 @@ namespace AvitoMonitor{
                     
                     //создание БД и деректории для картинок при их отсутствии
                     Support.CreationOfDataBase(Support.WAY);
-                    Support.CreationOfDataBaseForNewAdds(Support.WAY_FOR_NEW_ADDS);
                     Support.CreationOfDirectory(Support.PATHtoIMG);
 
                     richTextBox1.Clear();
@@ -69,7 +67,7 @@ namespace AvitoMonitor{
                     }
                 
                     //Создание вспомогательной Базы данных 
-                    string sourceFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY_FOR_NEW_ADDS);
+                    string sourceFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY);
                     string destFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY_FOR_SUPPORT_DB);
                     File.Copy(sourceFile, destFile, true);
 
@@ -115,9 +113,7 @@ namespace AvitoMonitor{
                                     string imgName = Path.GetFileName(path).Replace(Path.GetExtension(path), ""); // запишем в переменную имя файла, не забыв удалить расширение с точкой, получим «img»
 
                                     // записываем информацию в базы данных
-                                    using (SQLiteConnection connectOP = new SQLiteConnection(
-                                        @"Data Source=" + AppDomain.CurrentDomain.BaseDirectory + @"\"
-                                        + Support.WAY + @"; Version=3;")){
+                                    using (SQLiteConnection connectOP = new SQLiteConnection(Support.conectString)){
                                         DataTable dTable = new DataTable();
                                         string CommandTextOP = "SELECT * " +
                                             "FROM AvitoMonitor WHERE [Ссылка на Объявление]='" + Support.MainLink + title[i]["href"] + @"'"; // Если этот запрос не выполняется
@@ -125,9 +121,7 @@ namespace AvitoMonitor{
                                         SQLiteDataAdapter adapter = new SQLiteDataAdapter(CommandTextOP, connectOP);
                                         adapter.Fill(dTable);
                                         if (dTable.Rows.Count == 0) {
-                                            using (SQLiteConnection Connect = new SQLiteConnection(
-                                                    @"Data Source=" + AppDomain.CurrentDomain.BaseDirectory + @"\"
-                                                    + Support.WAY + @"; Version=3;")){
+                                            using (SQLiteConnection Connect = new SQLiteConnection(Support.conectString)){
                                                 string commandText = "INSERT INTO [AvitoMonitor] ([Время], [Название], [Цена], [Город], [Опубликовано], [Тип], [Картинка], [Формат картинки], [Ссылка на Объявление]) " +
                                                     "VALUES(@time, @name, @price, @city, @addtime, @type, @image, @format, @add_link)";
                                                 SQLiteCommand Command = new SQLiteCommand(commandText, Connect);
@@ -147,11 +141,10 @@ namespace AvitoMonitor{
                                         }
                                     }
                                     
-                                    using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=" + 
-                                        AppDomain.CurrentDomain.BaseDirectory + @"\" + Support.WAY_FOR_NEW_ADDS + @"; Version=3;")) {
+                                    using (SQLiteConnection connection = new SQLiteConnection(Support.conectString)) {
                                         DataTable dTable = new DataTable();
                                         string CommandText = "SELECT * " +
-                                            "FROM AvitoMonitorNew WHERE [Ссылка на Объявление]='" + Support.MainLink + title[i]["href"] + @"'"; // Если этот запрос не выполняется
+                                            "FROM AvitoMonitorNew WHERE [Ссылка на Объявление]='" + Support.MainLink + title[i]["href"] + @"'"; 
                                         SQLiteCommand Command = new SQLiteCommand(CommandText, connection);
                                         SQLiteDataAdapter adapter = new SQLiteDataAdapter(CommandText, connection);
                                         adapter.Fill(dTable);
@@ -203,7 +196,7 @@ namespace AvitoMonitor{
                         MessageBox.Show("Новых обьявлений не найдено",
                                "Нет новых объявлений", MessageBoxButtons.OK);
                         using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=" +
-                            AppDomain.CurrentDomain.BaseDirectory + @"\" + Support.WAY_FOR_NEW_ADDS + @"; Version=3;")) { 
+                            AppDomain.CurrentDomain.BaseDirectory + @"\" + Support.WAY + @"; Version=3;")) { 
                             DataTable dTable = new DataTable();
                             string CommandText = "SELECT * FROM AvitoMonitorNew";
                             SQLiteCommand Command = new SQLiteCommand(CommandText, connection);
@@ -211,13 +204,13 @@ namespace AvitoMonitor{
                             adapter.Fill(dTable);
                             if (dTable.Rows.Count == 0){
                                 string beginFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY_FOR_SUPPORT_DB);
-                                string endFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY_FOR_NEW_ADDS);
+                                string endFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY);
                                 File.Copy(beginFile, endFile, true);
                             }
                         }
                     }
                     File.Delete(Support.WAY_FOR_SUPPORT_DB);
-                    //richTextBox1.AppendText(Support.SEARCHstring);
+                    richTextBox1.AppendText(Support.SEARCHstring);
                     Support.SEARCHstringDefault();
                 }
             } catch (Exception) {
@@ -226,18 +219,6 @@ namespace AvitoMonitor{
                 return;
             }
         }
-        /*void ExecuteQuery(string txtQuery) {
-            using(SQLiteConnection connection = new SQLiteConnection(conectString)) {
-                SQLiteCommand command = new SQLiteCommand();
-                command = connection.CreateCommand();
-                command.CommandText = txtQuery;
-                command.ExecuteNonQuery();
-                connection.Close();
-                connection.Dispose();
-                command.Dispose();
-                command = null;
-            }
-        }*/
         void LoadData() {
             using(SQLiteConnection connection = new SQLiteConnection(Support.conectString)) {
                 SQLiteCommand command = connection.CreateCommand();
@@ -254,7 +235,7 @@ namespace AvitoMonitor{
             }
         }
         void LoadNewData() {
-            using(SQLiteConnection connection = new SQLiteConnection(Support.conectStringForNewDB)) {
+            using(SQLiteConnection connection = new SQLiteConnection(Support.conectString)) {
                 SQLiteCommand command = connection.CreateCommand();
                 string ComandText = "select *from AvitoMonitorNew";
                 SQLiteDataAdapter DB = new SQLiteDataAdapter(ComandText, connection);
@@ -299,8 +280,8 @@ namespace AvitoMonitor{
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
-            if (!File.Exists(Support.WAY_FOR_NEW_ADDS))
-                Support.CreationOfDataBaseForNewAdds(Support.WAY_FOR_NEW_ADDS);
+            if (!File.Exists(Support.WAY))
+                Support.CreationOfDataBase(Support.WAY);
             LoadNewData();
 
             dataGridView1.AutoSizeColumnsMode =
@@ -346,13 +327,12 @@ namespace AvitoMonitor{
         }
 
         private void DeleteDB_Click(object sender, EventArgs e){
-            if (File.Exists(Support.WAY) && File.Exists(Support.WAY_FOR_NEW_ADDS)){
+            if (File.Exists(Support.WAY)){
                 try { 
                     dataGridView1.DataSource = null;
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                     Support.DeleteDB(Support.WAY);
-                    Support.DeleteDB(Support.WAY_FOR_NEW_ADDS);
                     MessageBox.Show("Базы данных успешно удалены", "Удаление прошло успешно",
                         MessageBoxButtons.OK, MessageBoxIcon.None);
                 } catch (Exception ex) { 
@@ -378,29 +358,6 @@ namespace AvitoMonitor{
                     string sourcePath = AppDomain.CurrentDomain.BaseDirectory;
                     string targetPath = Path.GetFullPath(savedialog.FileName);
                     string sourceFile = Path.Combine(sourcePath, Support.WAY);
-                    string destFile = Path.Combine(targetPath, savedialog.FileName);
-                    File.Copy(sourceFile, destFile, true);
-                } catch (Exception ex){
-                    MessageBox.Show("Невозможно сохранить базу данных, возможно вы её удалили \n" 
-                        + ex.Message, "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem_Click(object sender, EventArgs e){
-            SaveFileDialog savedialog = new SaveFileDialog();
-            savedialog.InitialDirectory = @"C:\";
-            savedialog.Title = "Сохранить Базу Данных как...";
-            savedialog.OverwritePrompt = true;
-            savedialog.CheckPathExists = true;
-            savedialog.Filter = "DataBase files(*.db)|*.db";
-            savedialog.ShowHelp = true;
-            if (savedialog.ShowDialog() == DialogResult.OK) { 
-                try{
-                    string sourcePath = AppDomain.CurrentDomain.BaseDirectory;
-                    string targetPath = Path.GetFullPath(savedialog.FileName);
-                    string sourceFile = Path.Combine(sourcePath, Support.WAY_FOR_NEW_ADDS);
                     string destFile = Path.Combine(targetPath, savedialog.FileName);
                     File.Copy(sourceFile, destFile, true);
                 } catch (Exception ex){

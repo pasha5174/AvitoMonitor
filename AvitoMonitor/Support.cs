@@ -18,14 +18,12 @@ namespace AvitoMonitor{
         public static bool Marker = false;
         public static string htmlCode;
         public static string WAY = @"AvitoMonitor.db";
-        public static string WAY_FOR_NEW_ADDS = @"AvitoMonitorNew.db";
         public static string WAY_FOR_SUPPORT_DB = @"AvitoMonitorSupport.db";
         public static string PATHtoIMG = @"Image Maker";
         public static string ImageString = "https:";
         public static string MainLink = @"https://www.avito.ru";
         public static string SEARCHstring = "https://www.avito.ru";
         public static string conectString = "Data Source=AvitoMonitor.db;Version=3;New=False;Compress=True;";
-        public static string conectStringForNewDB = "Data Source=AvitoMonitorNew.db;Version=3;New=False;Compress=True;";
         public static void CreationOfDataBase(string WAY) { 
             if (!File.Exists(WAY)) {
                 SQLiteConnection.CreateFile(WAY);
@@ -46,16 +44,8 @@ namespace AvitoMonitor{
                     SQLiteCommand Command = new SQLiteCommand(commandText, connection);
                     connection.Open(); 
                     Command.ExecuteNonQuery(); 
-                    connection.Close(); 
-                }
-            } 
-        }
-        public static void CreationOfDataBaseForNewAdds(string WAY_FOR_NEW_ADDS){ 
-            if (!File.Exists(WAY_FOR_NEW_ADDS)) {
-                SQLiteConnection.CreateFile(WAY_FOR_NEW_ADDS);
-                using (SQLiteConnection connection = 
-                new SQLiteConnection(@"Data Source=AvitoMonitorNew.db; Version=3;")){
-                    string commandText = "CREATE TABLE [AvitoMonitorNew] ( " +
+                    connection.Close();
+                    string commandText2 = "CREATE TABLE [AvitoMonitorNew] ( " +
                         //"[id] CHAR(10) NOT NULL, " +
                         "[Время] CHAR(50) NOT NULL, " +
                         "[Название] CHAR(200) NOT NULL, " +
@@ -67,10 +57,10 @@ namespace AvitoMonitor{
                         "[Формат картинки] VARCHAR(10), " +
                         "[Ссылка на Объявление] NVARCHAR(128)" +
                         ")";
-                    SQLiteCommand Command = new SQLiteCommand(commandText, connection);
-                    connection.Open(); 
-                    Command.ExecuteNonQuery(); 
-                    connection.Close(); 
+                    SQLiteCommand Command2 = new SQLiteCommand(commandText2, connection);
+                    connection.Open();
+                    Command2.ExecuteNonQuery();
+                    connection.Close();
                 }
             } 
         }

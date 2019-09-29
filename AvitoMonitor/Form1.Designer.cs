@@ -44,7 +44,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.loadnewdb = new System.Windows.Forms.Button();
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -498,7 +497,7 @@
             this.DeleteDB.Name = "DeleteDB";
             this.DeleteDB.Size = new System.Drawing.Size(248, 24);
             this.DeleteDB.TabIndex = 7;
-            this.DeleteDB.Text = "Удалить базы данных";
+            this.DeleteDB.Text = "Удалить базу данных";
             this.DeleteDB.UseVisualStyleBackColor = true;
             this.DeleteDB.Click += new System.EventHandler(this.DeleteDB_Click);
             // 
@@ -515,8 +514,7 @@
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.копироватьБазуДанныхToolStripMenuItem,
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem});
+            this.копироватьБазуДанныхToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
@@ -524,7 +522,7 @@
             // копироватьБазуДанныхToolStripMenuItem
             // 
             this.копироватьБазуДанныхToolStripMenuItem.Name = "копироватьБазуДанныхToolStripMenuItem";
-            this.копироватьБазуДанныхToolStripMenuItem.Size = new System.Drawing.Size(338, 22);
+            this.копироватьБазуДанныхToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.копироватьБазуДанныхToolStripMenuItem.Text = "Копировать базу данных";
             this.копироватьБазуДанныхToolStripMenuItem.Click += new System.EventHandler(this.копироватьБазуДанныхToolStripMenuItem_Click);
             // 
@@ -565,13 +563,6 @@
             this.loadnewdb.Text = "Посмотреть новые объявления";
             this.loadnewdb.UseVisualStyleBackColor = true;
             this.loadnewdb.Click += new System.EventHandler(this.loadnewdb_Click_1);
-            // 
-            // копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem
-            // 
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Name = "копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem";
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Size = new System.Drawing.Size(338, 22);
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Text = "Копировать базу данных для новых объявлений";
-            this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem.Click += new System.EventHandler(this.копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem_Click);
             // 
             // AvitoMonitor
             // 
@@ -622,7 +613,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button loadnewdb;
-        private System.Windows.Forms.ToolStripMenuItem копироватьБазуДанныхДляНовыхОбъявленийToolStripMenuItem;
     }
 }
 
