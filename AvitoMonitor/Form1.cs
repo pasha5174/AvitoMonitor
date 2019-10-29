@@ -67,9 +67,9 @@ namespace AvitoMonitor{
                     }
                 
                     //Создание вспомогательной Базы данных 
-                    string sourceFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY);
+                    /*string sourceFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY);
                     string destFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY_FOR_SUPPORT_DB);
-                    File.Copy(sourceFile, destFile, true);
+                    File.Copy(sourceFile, destFile, true);*/
 
                     Encoding utf8 = Encoding.GetEncoding("UTF-8");
                     Encoding win1251 = Encoding.GetEncoding("Windows-1251");
@@ -180,7 +180,7 @@ namespace AvitoMonitor{
                             }
                             Support.ImageStringDefault();
                         } catch (Exception ex){ 
-                            //MessageBox.Show(ex.Message);
+                            MessageBox.Show(ex.Message);
                             continue;
                         }
                         j += item.Select(".large-picture-img").Count();
@@ -202,14 +202,14 @@ namespace AvitoMonitor{
                             SQLiteCommand Command = new SQLiteCommand(CommandText, connection);
                             SQLiteDataAdapter adapter = new SQLiteDataAdapter(CommandText, connection);
                             adapter.Fill(dTable);
-                            if (dTable.Rows.Count == 0){
+                            /*if (dTable.Rows.Count == 0){
                                 string beginFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY_FOR_SUPPORT_DB);
                                 string endFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Support.WAY);
                                 File.Copy(beginFile, endFile, true);
-                            }
+                            }*/
                         }
                     }
-                    File.Delete(Support.WAY_FOR_SUPPORT_DB);
+                    //File.Delete(Support.WAY_FOR_SUPPORT_DB);
                     richTextBox1.AppendText(Support.SEARCHstring);
                     Support.SEARCHstringDefault();
                 }
@@ -230,7 +230,6 @@ namespace AvitoMonitor{
                 DataTable DT;
                 DT = DS.Tables[0];
                 dataGridView1.DataSource = DT;
-                connection.Close();
                 connection.Dispose();
             }
         }
@@ -245,7 +244,6 @@ namespace AvitoMonitor{
                 DataTable DT;
                 DT = DS.Tables[0];
                 dataGridView1.DataSource = DT;
-                connection.Close();
                 connection.Dispose();
             }
         }

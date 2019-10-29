@@ -18,7 +18,7 @@ namespace AvitoMonitor{
         public static bool Marker = false;
         public static string htmlCode;
         public static string WAY = @"AvitoMonitor.db";
-        public static string WAY_FOR_SUPPORT_DB = @"AvitoMonitorSupport.db";
+//        public static string WAY_FOR_SUPPORT_DB = @"AvitoMonitorSupport.db";
         public static string PATHtoIMG = @"Image Maker";
         public static string ImageString = "https:";
         public static string MainLink = @"https://www.avito.ru";
@@ -29,6 +29,7 @@ namespace AvitoMonitor{
                 SQLiteConnection.CreateFile(WAY);
                 using (SQLiteConnection connection = 
                 new SQLiteConnection(@"Data Source=AvitoMonitor.db; Version=3;")){
+
                     string commandText = "CREATE TABLE [AvitoMonitor] ( " +
                         //"[id] CHAR(10) NOT NULL, " +
                         "[Время] CHAR(50) NOT NULL, " +
@@ -41,10 +42,14 @@ namespace AvitoMonitor{
                         "[Формат картинки] VARCHAR(10), " +
                         "[Ссылка на Объявление] NVARCHAR(128)" +
                         ")";
-                    SQLiteCommand Command = new SQLiteCommand(commandText, connection);
-                    connection.Open(); 
-                    Command.ExecuteNonQuery(); 
-                    connection.Close();
+
+                    using (SQLiteCommand Command = new SQLiteCommand(commandText, connection)) {
+                        connection.Open();
+                        Command.ExecuteNonQuery(); 
+                        connection.Close();
+                        
+                    }
+                    
                     string commandText2 = "CREATE TABLE [AvitoMonitorNew] ( " +
                         //"[id] CHAR(10) NOT NULL, " +
                         "[Время] CHAR(50) NOT NULL, " +
@@ -57,10 +62,13 @@ namespace AvitoMonitor{
                         "[Формат картинки] VARCHAR(10), " +
                         "[Ссылка на Объявление] NVARCHAR(128)" +
                         ")";
-                    SQLiteCommand Command2 = new SQLiteCommand(commandText2, connection);
-                    connection.Open();
-                    Command2.ExecuteNonQuery();
-                    connection.Close();
+
+                    using (SQLiteCommand Command2 = new SQLiteCommand(commandText2, connection)) {
+                        connection.Open();
+                        Command2.ExecuteNonQuery();
+                        connection.Close();
+                        
+                    }
                 }
             } 
         }
